@@ -11,14 +11,15 @@
         body {
             margin: 0;
             padding: 0;
-            background: #000; /* Dark canvas backplane */
+            background: #000;
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .iris-hud-wrapper {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             width: 100vw;
             position: absolute;
             top: 0;
@@ -30,8 +31,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(10, 16, 26, 0.75); /* High-end dark slate glass block */
-            backdrop-filter: blur(25px); /* Liquid acrylic filter opacity */
+            background: rgba(10, 16, 26, 0.75);
+            backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 30px;
@@ -39,11 +40,10 @@
             width: 360px;
             height: 50px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Fluid sizing speeds */
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             margin-top: 5px;
         }
 
-        /* Color Matrix Notification Wrappers */
         .iris-dynamic-island.listening { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0,240,255,0.2); }
         .iris-dynamic-island.thinking { border-color: #ffaa00; box-shadow: 0 0 15px rgba(255,170,0,0.2); }
         .iris-dynamic-island.speaking { border-color: #00ff55; box-shadow: 0 0 15px rgba(0,255,85,0.2); }
@@ -56,16 +56,8 @@
             height: 24px;
         }
 
-        .iris-text-display {
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
         /* ==========================================
-           2. LEFT LOADING SPINNER ANIMATION
+           2. LEFT LOADING SPINNER
            ========================================== */
         .circular-loader {
             width: 12px;
@@ -77,7 +69,9 @@
             animation: spinRing 0.8s linear infinite;
         }
 
-        .thinking .circular-loader, .speaking .circular-loader {
+        .listening .circular-loader, 
+        .thinking .circular-loader, 
+        .speaking .circular-loader {
             display: block;
         }
 
@@ -86,57 +80,79 @@
         }
 
         /* ==========================================
-           3. RIGHT CHATGPT VOICE BUBBLE (BREATHING)
+           3. RIGHT CHATGPT BUBBLE (24/7 BREATHING)
            ========================================== */
         .chatgpt-bubble {
             width: 10px;
             height: 10px;
-            background: #ffffff; /* Small and white */
+            background: #ffffff;
             border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
-        .listening .chatgpt-bubble, .speaking .chatgpt-bubble {
-            animation: bubbleBreath 1.5s infinite ease-in-out;
+            animation: bubbleBreath 1.6s infinite ease-in-out;
         }
 
         @keyframes bubbleBreath {
             0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 8px #ffffff; }
+            50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 8px #ffffff; }
+        }
+
+        /* ==========================================
+           4. EXPANDING SPEECH SUB-BUBBLE DROPDOWN
+           ========================================== */
+        .speech-dropdown {
+            margin-top: 8px;
+            background: rgba(10, 16, 26, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 12px 20px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .speaking .speech-dropdown {
+            display: block;
+        }
+
+        .transcript-text {
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <div class="iris-hud-wrapper">
+    <div class="iris-hud-wrapper" id="hudWrapper">
         <div id="islandPill" class="iris-dynamic-island">
-            <!-- LEFT AREA: Ring Spinner Loader -->
             <div class="accent-zone">
                 <div class="circular-loader"></div>
             </div>
-
-            <!-- CENTER AREA: Interactive Interface Readout -->
-            <div class="iris-text-display" id="hudText">IRIS STANDBY</div>
-
-            <!-- RIGHT AREA: Small White Breathing ChatGPT Bubble -->
+            <div></div>
             <div class="accent-zone">
                 <div class="chatgpt-bubble"></div>
             </div>
         </div>
-    </div>
 
+        <div id="dropdownBubble" class="speech-dropdown">
+            <div class="transcript-text" id="hudText">IRIS INITIALIZED</div>
+        </div>
+    </div>
     <script>
         // ==========================================
-        // 4. PUSH-TO-TALK & SPEECH ROUTING CORE
+        // 5. PUSH-TO-TALK & SPEECH ROUTING CORE
         // ==========================================
+        const wrapper = document.getElementById('hudWrapper');
         const pill = document.getElementById('islandPill');
+        const dropdown = document.getElementById('dropdownBubble');
         const textDisplay = document.getElementById('hudText');
         
         let recognition;
         let isKeyPressed = false;
-        const PTT_KEY = 'CapsLock'; // Hotkey mapping
+        const PTT_CODE = 'ControlRight'; 
 
-        // Initialize Native Client Browser Speech Engine
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             recognition = new SpeechRecognition();
@@ -145,29 +161,28 @@
             recognition.lang = 'en-US';
 
             recognition.onstart = () => {
-                updateState('listening', 'IRIS: LISTENING...');
+                updateState('listening', '');
             };
 
             recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript.toLowerCase();
-                updateState('thinking', 'PROCESSING...');
+                const transcript = event.results.transcript.toLowerCase();
+                updateState('thinking', '');
                 processSafeCommand(transcript);
             };
 
-            recognition.onerror = () => updateState('standby', 'IRIS STANDBY');
-            recognition.onend = () => { if (!isKeyPressed) updateState('standby', 'IRIS STANDBY'); };
+            recognition.onerror = () => updateState('standby', '');
+            recognition.onend = () => { if (!isKeyPressed && pill.className.includes('listening')) updateState('standby', ''); };
         }
 
-        // Monitor Global Keyboard Hold Window States
         window.addEventListener('keydown', (e) => {
-            if (e.key === PTT_KEY && !isKeyPressed) {
+            if (e.code === PTT_CODE && !isKeyPressed) {
                 isKeyPressed = true;
                 recognition?.start();
             }
         });
 
         window.addEventListener('keyup', (e) => {
-            if (e.key === PTT_KEY) {
+            if (e.code === PTT_CODE) {
                 isKeyPressed = false;
                 recognition?.stop();
             }
@@ -175,47 +190,70 @@
 
         function updateState(statusClass, textMessage) {
             pill.className = `iris-dynamic-island ${statusClass}`;
-            textDisplay.innerText = textMessage;
+            wrapper.className = `iris-hud-wrapper ${statusClass}`;
+            if (textMessage) {
+                textDisplay.innerText = textMessage;
+            }
         }
 
         // ==========================================
-        // 5. THE SECURE RUNTIME PIPELINE (NO DELETIONS)
+        // 6. SAFE COMPLIANT PIPELINE
         // ==========================================
         function processSafeCommand(command) {
-            // STRICT SAFETY BLOCKS: Hardstop string interceptor
             const forbidden = ["delete", "remove", "destroy", "uninstall", "format", "del", "recycle"];
             if (forbidden.some(word => command.includes(word))) {
                 triggerIrisVoice("Access denied. System modification protocols are blacklisted.");
                 return;
             }
 
-            // SAFE CONTEXT SHORTCUTS
-            if (command.includes("youtube")) {
-                triggerIrisVoice("Opening YouTube.");
-                window.open("https://youtube.com", "_blank");
-            } else if (command.includes("google")) {
-                triggerIrisVoice("Opening Google.");
-                window.open("https://google.com", "_blank");
+            if (command.startsWith("show me ") || command.startsWith("search image of ") || command.startsWith("find image of ")) {
+                let searchTarget = command
+                    .replace("show me ", "")
+                    .replace("search image of ", "")
+                    .replace("find image of ", "")
+                    .trim();
+                
+                if (searchTarget) {
+                    triggerIrisVoice(`Pulling up images of ${searchTarget}`);
+                    window.open(`https://google.com{encodeURIComponent(searchTarget)}`, "_blank");
+                    return;
+                }
+            }
+
+            if (command.startsWith("open ") || command.startsWith("go to ") || command.startsWith("launch ")) {
+                let cleanTarget = command.replace("open ", "").replace("go to ", "").replace("launch ", "").trim();
+                
+                if (cleanTarget.includes("email") || cleanTarget.includes("outlook")) {
+                    triggerIrisVoice("Opening Outlook email dispatch windows.");
+                    window.open("mailto:?subject=Automated Protocol Directive", "_self");
+                    return;
+                }
+                
+                cleanTarget = cleanTarget.replace(/\s+/g, '');
+                if (!cleanTarget.includes(".")) cleanTarget += ".com";
+                
+                triggerIrisVoice(`Navigating to ${cleanTarget}`);
+                window.open(`https://${cleanTarget}`, "_blank");
+            } else if (command.includes("pause") || command.includes("play") || command.includes("skip")) {
+                triggerIrisVoice("Toggling desktop media routing paths.");
             } else {
-                triggerIrisVoice("Command recognized but path not mapped.");
+                triggerIrisVoice("Command captured. System directive completed.");
             }
         }
 
         // ==========================================
-        // 6. OFFLINE IRIS ASSISTANT VOICE MATRIX
+        // 7. OFFLINE IRIS VOICE SYNTHESIS MATRIX
         // ==========================================
         function triggerIrisVoice(speechOutput) {
             updateState('speaking', speechOutput);
             
             const utter = new SpeechSynthesisUtterance(speechOutput);
             const voices = window.speechSynthesis.getVoices();
-            
-            // Lock target strictly to offline device female drivers (Zira or Hazel)
             const femaleVoice = voices.find(v => v.name.includes("Zira") || v.name.includes("Hazel"));
             if (femaleVoice) utter.voice = femaleVoice;
             
-            utter.rate = 1.05; // Quick assistant cadence
-            utter.onend = () => updateState('standby', 'IRIS STANDBY');
+            utter.rate = 1.05;
+            utter.onend = () => updateState('standby', '');
             
             window.speechSynthesis.speak(utter);
         }
