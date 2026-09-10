@@ -1,55 +1,44 @@
+/* Inside apps/desktop/src-tauri/tauri.conf.json */
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "EchoIsland",
-  "version": "0.6.1",
-  "identifier": "com.echoisland.desktop",
+  "$schema": "https://tauri.app",
+  "productName": "Iris Dynamic Island",
+  "version": "0.1.0",
+  "identifier": "com.iris.dynamic.island",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "frontendDist": "../web"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Iris Dynamic Island",
+        "width": 450,
+        "height": 120,
+        "x": 735,
+        "y": 0,
+        "resizable": false,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "center": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src ipc: http://ipc.localhost; img-src 'self' https: data:;"
+    }
+  },
   "bundle": {
     "active": true,
-    "createUpdaterArtifacts": true,
+    "targets": "all",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ],
-    "macOS": {
-      "dmg": {
-        "windowSize": {
-          "width": 660,
-          "height": 400
-        },
-        "appPosition": {
-          "x": 180,
-          "y": 170
-        },
-        "applicationFolderPosition": {
-          "x": 480,
-          "y": 170
-        }
-      }
-    }
-  },
-  "build": {
-    "frontendDist": "../web"
-  },
-  "app": {
-    "macOSPrivateApi": true,
-    "withGlobalTauri": true,
-    "windows": [],
-    "security": {
-      "csp": null
-    }
-  },
-  "plugins": {
-    "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ2NDEzNzI5MDlGQkY2OApSV1JvdjUrUWNoTmtCR0d4bWVkSGs0WHA5dE9wZTlFc0hrU0FJSUMwaS9qd016c3lvcnhGeGlNNgo=",
-      "endpoints": [
-        "https://github.com/FunplayAI/EchoIsland/releases/latest/download/latest.json"
-      ],
-      "windows": {
-        "installMode": "passive"
-      }
-    }
+    ]
   }
 }
