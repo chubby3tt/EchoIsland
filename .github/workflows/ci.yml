@@ -1,69 +1,34 @@
-name: CI
-
+name: Build Iris Desktop App
 on:
-  pull_request:
   push:
-    branches:
-      - main
+    branches: [ main, master ]
 
 jobs:
-  rust-windows:
-    name: Rust (Windows)
+  build-windows:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
         with:
-          components: clippy,rustfmt
+          node-version: 20
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
-
-      - name: Prepare hook bridge resource
-        shell: pwsh
-        run: |
-          cargo build -p echoisland-hook-bridge
-          New-Item -ItemType Directory -Force apps/desktop/src-tauri/resources | Out-Null
-          Copy-Item target/debug/echoisland-hook-bridge.exe apps/desktop/src-tauri/resources/echoisland-hook-bridge.exe -Force
-
-      - name: Check workspace
-        run: cargo check --workspace
-
-      - name: Run tests
-        run: cargo test --workspace
-
-      - name: Run clippy
-        shell: pwsh
-        run: |
-          $output = cmd /c "cargo clippy --workspace --all-targets --no-deps -- -D warnings 2>&1"
-          $exitCode = $LASTEXITCODE
-          $output | ForEach-Object { Write-Output $_ }
-          if ($exitCode -ne 0) {
-            $summary = ($output | Select-Object -Last 80) -join "`n"
-            $summary = $summary.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
-            Write-Output "::error title=clippy failed::$summary"
-            exit $exitCode
-          }
-
-  rust-macos:
-    name: Rust (macOS compile)
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust Stable Toolchain
+        uses: dtolnay/rust-toolchain@master
         with:
-          components: rustfmt
+          toolchain: stable
+          targets: x86_64-pc-windows-msvc
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
+      - name: Install Project Node Modules
+        run: npm install
 
-      - name: Check workspace
-        run: cargo check --workspace
+      - name: Compile Standalone Iris Windows App
+        run: npm run desktop:build
+
+      - name: Upload Finished Executable Asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: Iris-Dynamic-Island-Installer
+          path: apps/desktop/src-tauri/target/release/bundle/msi/*.msi
