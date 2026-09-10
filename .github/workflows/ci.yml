@@ -32,3 +32,4 @@ jobs:
         with:
           name: Iris-Dynamic-Island-Installer
           path: apps/desktop/src-tauri/target/release/bundle/msi/*.msi
+ 
