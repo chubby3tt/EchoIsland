@@ -3,7 +3,7 @@
   "$schema": "https://tauri.app",
   "productName": "Iris Dynamic Island",
   "version": "0.1.0",
-  "identifier": "com.iris.dynamic.island",
+  "identifier": "com.chubby3tt.echoisland",
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
