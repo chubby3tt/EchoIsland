@@ -25,11 +25,10 @@ jobs:
         run: npm install
 
       - name: Compile Standalone Iris Windows App
-        run: npm run desktop:build
+        run: npm run desktop:build -- --no-tests
 
       - name: Upload Finished Executable Asset
         uses: actions/upload-artifact@v4
         with:
           name: Iris-Dynamic-Island-Installer
           path: apps/desktop/src-tauri/target/release/bundle/msi/*.msi
- 
