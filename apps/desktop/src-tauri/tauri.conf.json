@@ -1,34 +1,9 @@
-/* Inside apps/desktop/src-tauri/tauri.conf.json */
 {
-  "$schema": "https://tauri.app",
-  "productName": "Iris Dynamic Island",
-  "version": "0.1.0",
-  "identifier": "com.chubby3tt.echoisland",
   "build": {
-    "beforeDevCommand": "",
-    "beforeBuildCommand": "",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420",
     "frontendDist": "../web"
-  },
-  "app": {
-    "windows": [
-      {
-        "title": "Iris Dynamic Island",
-        "width": 450,
-        "height": 120,
-        "x": 735,
-        "y": 0,
-        "resizable": false,
-        "fullscreen": false,
-        "decorations": false,
-        "transparent": true,
-        "alwaysOnTop": true,
-        "skipTaskbar": true,
-        "center": false
-      }
-    ],
-    "security": {
-      "csp": "default-src 'self'; connect-src ipc: http://ipc.localhost; img-src 'self' https: data:;"
-    }
   },
   "bundle": {
     "active": true,
@@ -39,6 +14,26 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "identifier": "com.chubby3tt.echoisland",
+    "publisher": "chubby3tt"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Iris 2.0",
+        "width": 380,
+        "height": 50,
+        "resizable": false,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }
