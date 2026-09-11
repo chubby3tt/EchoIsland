@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" 
+  content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="referrer" content="no-referrer">
 <title>Iris 2.0 — EDITH</title>
@@ -15,25 +16,22 @@
     color-scheme: dark;
     font-family: "Segoe UI", system-ui, sans-serif;
   }
-
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-
   html, body {
     margin: 0;
     min-height: 100%;
     background: transparent;
     color: var(--text);
   }
-
   button, input { font: inherit; }
   button { cursor: pointer; }
-
-  button:focus-visible, input:focus-visible, a:focus-visible {
+  button:focus-visible, 
+  input:focus-visible, 
+  a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
   }
-
   .stage {
     position: fixed;
     top: max(12px, env(safe-area-inset-top));
@@ -48,7 +46,6 @@
     overflow: auto;
     scrollbar-width: thin;
   }
-
   .glass {
     background: var(--glass);
     backdrop-filter: blur(25px);
@@ -56,7 +53,6 @@
     border: 1px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
   }
-
   .capsule {
     --glow: rgba(255, 255, 255, 0.3);
     position: relative;
@@ -72,12 +68,10 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: border-color 160ms ease, box-shadow 160ms ease;
   }
-
   .capsule.listening { --glow: #00f0ff; }
   .capsule.thinking { --glow: #ffaa00; }
   .capsule.speaking { --glow: #00ff55; }
   .capsule.denied { --glow: #ff5475; }
-
   .cluster {
     position: absolute;
     inset: 0 auto 0 16px;
@@ -86,7 +80,6 @@
     gap: 12px;
     pointer-events: none;
   }
-
   .bubble {
     width: 16px;
     height: 16px;
@@ -94,7 +87,6 @@
     background: white;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
   }
-
   .spinner {
     width: 17px;
     height: 17px;
@@ -103,233 +95,269 @@
     border-radius: 50%;
     opacity: 0.45;
   }
-
   .listening .bubble,
   .speaking .bubble {
     animation: breathe 1.2s ease-in-out infinite;
     will-change: transform;
   }
-
   .thinking .spinner {
     animation: spin 800ms linear infinite;
     opacity: 1;
     will-change: transform;
   }
-
   @keyframes breathe {
     0%, 100% { transform: scale(0.82); }
     50% { transform: scale(1.12); }
   }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
+  @keyframes spin { to { transform: rotate(360deg); } }
   .gear {
-    position: absolute;
-    right: 7px;
-    top: 6px;
-    width: 36px;
-    height: 36px;
-    border: 0;
-    border-radius: 50%;
-    background: transparent;
-    color: white;
-    opacity: 0;
-    transition: opacity 140ms ease, background 140ms ease;
+    position: absolute; right: 7px; top: 6px; width: 36px; height: 36px;
+    border: 0; border-radius: 50%; background: transparent; color: white;
+    opacity: 0; transition: opacity 140ms ease, background 140ms ease;
   }
-
   .capsule:hover .gear,
   .capsule:focus-within .gear,
-  .gear[aria-expanded="true"] {
-    opacity: 1;
-  }
-
+  .gear[aria-expanded="true"] { opacity: 1; }
   .gear:hover { background: rgba(255, 255, 255, 0.1); }
   .gear svg { width: 21px; height: 21px; vertical-align: middle; }
-
   .drawer {
-    order: -1;
-    flex-shrink: 0;
-    padding: 16px;
-    border-radius: 18px;
-    border-top: 2px solid var(--accent);
-    max-height: min(480px, 52dvh);
-    overflow: auto;
-    scrollbar-width: thin;
+    order: -1; flex-shrink: 0; padding: 16px; border-radius: 18px;
+    border-top: 2px solid var(--accent); max-height: min(480px, 52dvh);
+    overflow: auto; scrollbar-width: thin;
   }
-
-  .heading, .actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
+  .heading, .actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   h1 { font-size: 15px; margin: 0; letter-spacing: 0.06em; }
-  p { margin: 0; }
-
-  .note {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  .drawer .note { margin: 10px 0; }
-
-  label {
-    display: block;
-    margin-top: 11px;
-    color: var(--muted);
-    font-size: 12px;
-  }
-
-  input {
-    width: 100%;
-    min-width: 0;
-    padding: 9px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.22);
-    color: var(--text);
-  }
-
+  label { display: block; margin-top: 11px; color: var(--muted); font-size: 12px; }
+  input { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid rgba(255, 255, 255, 0.17); border-radius: 8px; background: rgba(0, 0, 0, 0.22); color: var(--text); }
   label input { display: block; margin-top: 5px; }
   input[type="color"] { height: 36px; padding: 3px; cursor: pointer; }
-
-  .button {
-    padding: 8px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text);
-  }
-
+  .button { padding: 8px 10px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: rgba(255, 255, 255, 0.06); color: var(--text); }
   .button:hover { background: rgba(255, 255, 255, 0.13); }
   .primary { border-color: var(--accent); background: rgba(0, 240, 255, 0.15); }
   .danger { border-color: #ff5475; background: rgba(255, 84, 117, 0.1); }
-
   .transcript {
-    flex-shrink: 0;
-    max-height: 0;
-    padding: 0 13px;
-    margin-top: -10px;
-    overflow: hidden;
-    border: 0;
-    border-radius: 16px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-9px);
+    flex-shrink: 0; max-height: 0; padding: 0 13px; margin-top: -10px;
+    overflow: hidden; border: 0; border-radius: 16px; opacity: 0;
+    visibility: hidden; transform: translateY(-9px);
     transition: transform 180ms ease, opacity 180ms ease, max-height 180ms ease, padding 180ms ease;
     pointer-events: none;
   }
-
   .transcript.visible {
-    max-height: min(280px, 34dvh);
-    padding: 13px;
-    margin-top: 0;
-    overflow: auto;
-    border: 1px solid rgba(255, 255, 255, 0.17);
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-    scrollbar-width: thin;
+    max-height: min(280px, 34dvh); padding: 13px; margin-top: 0; overflow: auto;
+    border: 1px solid rgba(255, 255, 255, 0.17); opacity: 1; visibility: visible;
+    transform: translateY(0); pointer-events: auto; scrollbar-width: thin;
   }
-
-  .transcript.error {
-    border: 2px solid #ff5475;
-    box-shadow: 0 0 18px rgba(255, 84, 117, 0.15);
-  }
-
-  .transcript-title {
-    margin-bottom: 7px;
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .error .transcript-title { color: #ff91a6; }
-
-  .response {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font-size: 13px;
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
-
-  .response:last-child { margin-bottom: 0; }
-
-  pre {
-    margin: 8px 0;
-    padding: 10px;
-    overflow: auto;
-    border-radius: 9px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    font: 12px/1.5 Consolas, monospace;
-    tab-size: 2;
-  }
-
-  code { font: inherit; }
-  a { color: var(--accent); overflow-wrap: anywhere; }
-
-  .surface, .runway {
-    flex-shrink: 0;
-    padding: 12px;
-    border-radius: 16px;
-  }
-
-  .surface label { margin: 0 0 7px; }
+  .transcript.error { border: 2px solid #ff5475; box-shadow: 0 0 18px rgba(255, 84, 117, 0.15); }
+  .transcript-title { margin-bottom: 7px; color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .response { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+  pre { margin: 8px 0; padding: 10px; overflow: auto; border-radius: 9px; background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.12); font: 12px/1.5 Consolas, monospace; }
+  .surface, .runway { flex-shrink: 0; padding: 12px; border-radius: 16px; }
   .command-row { display: flex; gap: 7px; }
-  .surface .note { margin-top: 8px; }
-  .surface .actions { margin-top: 9px; justify-content: flex-start; }
-
-  .runway-title {
-    margin-bottom: 9px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-  }
-
-  canvas {
-    display: block;
-    width: 340px;
-    max-width: 100%;
-    height: 60px;
-    margin: auto;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .runway .actions { margin-top: 9px; display: flex; gap: 8px; }
+  .runway-title { margin-bottom: 9px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); }
   .status { min-height: 17px; margin-top: 8px; font-size: 11px; color: var(--muted); text-align: center; }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   .suspended * { animation-play-state: paused !important; }
-
-  @media (hover: none) {
-    .gear { opacity: 0.7; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation: none !important;
-      transition: none !important;
-    }
-  }
+  @media (hover: none) { .gear { opacity: 0.7; } }
 </style>
 </head>
+<body>
+<main class="stage" aria-label="Iris assistant">
+  <section id="drawer" class="drawer glass" aria-labelledby="settings-title" hidden>
+    <div class="heading">
+      <h1 id="settings-title">EDITH CONFIGURATION</h1>
+      <button id="close-settings" class="button" type="button">✕</button>
+    </div>
+    <form id="settings-form" autocomplete="off" onsubmit="event.preventDefault();">
+      <label>Gemini API key <input id="gemini-key" type="password"></label>
+      <label>Gemini model target <input id="model" type="text" value="gemini-1.5-flash"></label>
+      <label>ElevenLabs API key <input id="eleven-key" type="password"></label>
+      <label>EDITH voice ID <input id="voice-id" type="text"></label>
+      <label>Interface Theme Color <input id="theme-color" type="color" value="#00f0ff"></label>
+      <div class="actions" style="margin-top: 14px;"><button class="button primary" type="button" id="save-settings">Save Directives</button></div>
+    </form>
+  </section>
+
+  <div id="capsule" class="capsule glass">
+    <div class="cluster">
+      <div class="bubble" id="status-bubble"></div>
+      <div class="spinner" id="status-spinner"></div>
+    </div>
+    <button id="gear-toggle" class="gear" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    </button>
+  </div>
+
+  <section id="transcript-pane" class="transcript glass" aria-live="polite">
+    <div class="transcript-title" id="pane-title">EDITH LOG STREAM</div>
+    <div class="response" id="response-content">SYSTEM ONLINE. STANDBY.</div>
+    <div id="code-zone"></div>
+  </section>
+
+  <section class="surface glass">
+    <label for="fallback-input">Manual Terminal Command</label>
+    <div class="command-row">
+      <input id="fallback-input" type="text" placeholder="Type tactical directive parameter layout...">
+      <button id="send-command" class="button primary" type="button">Run</button>
+    </div>
+  </section>
+
+  <section class="runway glass">
+    <div class="runway-title">LOCAL MACRO INTEGRITY RUNWAY</div>
+    <canvas id="demoCanvas" width="340" height="60"></canvas>
+    <div class="actions"><button id="stop-farm" class="button danger" type="button" disabled>Halt XP Loop</button></div>
+    <div id="status-bar" class="status">Simulator pipeline sitting idle.</div>
+  </section>
+</main>
+<script>
+  const capsule = document.getElementById('capsule');
+  const drawer = document.getElementById('drawer');
+  const gearToggle = document.getElementById('gear-toggle');
+  const closeSettings = document.getElementById('close-settings');
+  const saveSettings = document.getElementById('save-settings');
+  const transcriptPane = document.getElementById('transcript-pane');
+  const paneTitle = document.getElementById('pane-title');
+  const responseContent = document.getElementById('response-content');
+  const codeZone = document.getElementById('code-zone');
+  const fallbackInput = document.getElementById('fallback-input');
+  const sendCommand = document.getElementById('send-command');
+  const stopFarmBtn = document.getElementById('stop-farm');
+  const statusBar = document.getElementById('status-bar');
+  const demoCanvas = document.getElementById('demoCanvas');
+  const ctx = demoCanvas.getContext('2d');
+
+  let recognition = null, isKeyPressed = false, pttTimeout = null;
+  let farmInterval = null, currentAudio = null, lastKeyTime = 0;
+  let canvasX = 170, canvasY = 30;
+  const PTT_CODE = 'ControlRight';
+
+  let config = { 
+    gemini: '', 
+    model: 'gemini-1.5-flash', eleven: '', 
+    voice: 'kdmDKE6EkgrWrrykO9Qt', color: '#00f0ff' 
+  };
+
+  function loadConfig() {
+    try {
+      const saved = localStorage.getItem('edith_monolithic_config_v3');
+      if (saved) { config = JSON.parse(saved); }
+      document.getElementById('gemini-key').value = config.gemini;
+      document.getElementById('model').value = config.model;
+      document.getElementById('eleven-key').value = config.eleven;
+      document.getElementById('voice-id').value = config.voice;
+      document.getElementById('theme-color').value = config.color;
+      document.documentElement.style.setProperty('--accent', config.color);
+    } catch (e) { console.error(e); }
+    drawCanvas();
+  }
+
+  function saveConfigData() {
+    config.gemini = document.getElementById('gemini-key').value.trim();
+    config.model = document.getElementById('model').value.trim() || 'gemini-1.5-flash';
+    config.eleven = document.getElementById('eleven-key').value.trim();
+    config.voice = document.getElementById('voice-id').value.trim();
+    config.color = document.getElementById('theme-color').value;
+    localStorage.setItem('edith_monolithic_config_v3', JSON.stringify(config));
+    document.documentElement.style.setProperty('--accent', config.color);
+    setDrawerOpen(false); triggerVoiceOutput("Tactical credentials updated.");
+  }
+
+  function setDrawerOpen(open) { drawer.hidden = !open; gearToggle.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  gearToggle.addEventListener('click', () => setDrawerOpen(drawer.hidden));
+  closeSettings.addEventListener('click', () => setDrawerOpen(false));
+  saveSettings.addEventListener('click', saveConfigData);
+
+  const SpeechEngine = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechEngine) {
+    recognition = new SpeechEngine(); recognition.continuous = false; recognition.interimResults = false; recognition.lang = 'en-US';
+    recognition.onstart = () => { if (isKeyPressed) setVisualState('listening', 'EDITH SENSOR DETECT', 'RECORDING LOGS...'); };
+    recognition.onresult = (e) => { if (e.results && e.results) { processCommandLogic(e.results.transcript); } };
+    recognition.onerror = () => setVisualState('standby');
+    recognition.onend = () => { if (isKeyPressed) { try { recognition.start(); } catch(err) {} } else if (capsule.classList.contains('listening')) setVisualState('standby'); };
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === PTT_CODE) {
+      if (e.repeat) { e.preventDefault(); return; }
+      const now = Date.now(); if (now - lastKeyTime < 120) { e.preventDefault(); return; } lastKeyTime = now;
+      isKeyPressed = true; e.preventDefault(); if (!drawer.hidden || !recognition) return;
+      stopActiveAudioTracks(); recognition.start();
+    }
+  });
+
+  window.addEventListener('keyup', (e) => { if (e.code === PTT_CODE) { isKeyPressed = false; e.preventDefault(); recognition?.stop(); } });
+  window.addEventListener('blur', () => { isKeyPressed = false; recognition?.stop(); stopFarming(); });
+
+  function setVisualState(state, title = "EDITH LOG STREAM", body = "") {
+    capsule.className = `capsule glass ${state}`;
+    transcriptPane.className = `transcript glass ${state === 'standby' ? '' : 'visible'} ${state === 'denied' || state === 'error' ? 'error' : ''}`;
+    if (state !== 'standby') { paneTitle.textContent = title.toUpperCase(); responseContent.textContent = body.toUpperCase(); } else { codeZone.textContent = ''; }
+  }
+
+  function stopActiveAudioTracks() { if (currentAudio) { try { currentAudio.pause(); currentAudio = null; } catch(err) {} } window.speechSynthesis?.cancel(); }
+
+  sendCommand.addEventListener('click', () => { const txt = fallbackInput.value.trim(); if (!txt) return; fallbackInput.value = ''; stopActiveAudioTracks(); processCommandLogic(txt); });
+</script>
+<script>
+  async function processCommandLogic(rawText) {
+    const cmd = rawText.trim(); const lowCmd = cmd.toLowerCase(); codeZone.textContent = '';
+    const blacklist = ["delete", "remove", "destroy", "uninstall", "format", "del", "recycle"];
+    if (lowCmd.split(/[^a-zA-Z]/).some(w => blacklist.includes(w))) { setVisualState('denied', 'SECURITY CHECK', 'ACCESS DENIED: String filter intercept.'); triggerVoiceOutput("Access denied. Instructions to delete structural files are blacklisted."); return; }
+    if (lowCmd.includes("open configuration ui") || lowCmd.includes("open settings")) { setDrawerOpen(true); setVisualState('standby'); triggerVoiceOutput("Exposing control dashboard."); return; }
+
+    if (/^(find images of|show me images of|find pictures of)/i.test(lowCmd)) {
+      const q = cmd.replace(/^(find images of|show me images of|find pictures of)/i, "").trim();
+      setVisualState('speaking', 'LAUNCHING SEARCH', `SPAWNING WINDOW FOR: ${q}`); triggerVoiceOutput(`Searching networks for ${q || 'context assets'}.`);
+      const url = `https://google.com{encodeURIComponent(q || 'technology')}`; const win = window.open(url, '_blank');
+      if (!win) { const link = document.createElement('a'); link.href = url; link.target = "_blank"; link.textContent = "POPUP INTENT BLOCKED: CLICK TO FORCE WINDOW"; codeZone.appendChild(link); }
+      return;
+    }
+
+    if (lowCmd.includes("make art") || lowCmd.includes("generate art")) { setVisualState('speaking', 'CANVAS INTEGRITY', 'FORWARDING TERMINAL PATHWAYS'); triggerVoiceOutput("Mapping connection to design layer."); window.open("https://canva.com", "_blank"); return; }
+    if (lowCmd.includes("post video") || lowCmd.includes("edit video")) { setVisualState('speaking', 'MEDIA ROUTING', 'OPENING STUDIO DISPATCH'); triggerVoiceOutput("Deploying access routes onto studio upload node."); window.open("https://youtube.com", "_blank"); return; }
+    if (lowCmd.includes("find discounts") || lowCmd.includes("coupon codes")) { setVisualState('speaking', 'SCANNING INDICES', 'COMPUTING COUPON DATA STRINGS'); triggerVoiceOutput("Parsing open public token stores."); const pre = document.createElement('pre'); pre.textContent = "[SAMPLE UNVERIFIED CODES DETECTED IN LOCAL MOCK ARRAY]\n- AUTUMN25\n- SHIPFREE\n- PROMOEDITH"; codeZone.appendChild(pre); return; }
+    if (lowCmd.includes("check drivers") || lowCmd.includes("are there updates")) { setVisualState('speaking', 'VERSION COMPARISON', 'POLLING DISPATCH VERSIONS'); triggerVoiceOutput("Running asynchronous update checklist matrices."); const pre = document.createElement('pre'); pre.textContent = "[MOCK TELEMETRY INDEX]\n- Core Architecture: Verified\n- Dedicated GPU Stream: Unaltered\n- Update Log Queue: Clear (0)"; codeZone.appendChild(pre); return; }
+
+    if (lowCmd.includes("start xp farming loop") || lowCmd.includes("start autoclicker")) {
+      stopFarming(); setVisualState('speaking', 'MACRO RUNNING', 'DEPLOYING INTERACTION LOOPS'); triggerVoiceOutput("Activating rapid simulated clicks to runway canvas."); stopFarmBtn.disabled = false; statusBar.textContent = "XP Loop macro looping every 250ms natively.";
+      farmInterval = setInterval(() => { const ev = new MouseEvent('click', { clientX: Math.random() * 340, clientY: Math.random() * 60, bubbles: true }); demoCanvas.dispatchEvent(ev); }, 250); return;
+    }
+    if (lowCmd.includes("stop xp farming loop") || lowCmd.includes("stop autoclicker")) { stopFarming(); triggerVoiceOutput("Deactivating rapid interaction scripts."); setVisualState('standby'); return; }
+
+    if (config.gemini) {
+      setVisualState('thinking', 'GEMINI BOX', 'ROUTING STRINGS TO CORE AI...');
+      try { const res = await fetchGeminiReply(cmd); triggerVoiceOutput(res); } catch(err) { setVisualState('error', 'ROUTING BREAKUP', 'Outbound connection loop failure.'); }
+    } else { setVisualState('speaking', 'AI CORE OFFLINE', 'DEVELOPER TOKEN STRINGS REQUIRED'); triggerVoiceOutput("Conversational pipelines offline."); }
+  }
+
+  async function fetchGeminiReply(prompt) {
+    const url = `https://googleapis.com{config.model}:generateContent?key=${config.gemini}`;
+    const payload = { contents: [{ parts: [{ text: `You are EDITH, the direct security companion computing glass system from Spider-Man. Speak strictly in a crisp, short, tactical British assistant manner. Max 3 sentences. Prompt: ${prompt}` }] }] };
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); const d = await res.json();
+    if (d.candidates && d.candidates.content.parts.text) { return d.candidates.content.parts.text; } throw new Error();
+  }
+
+  async function triggerVoiceOutput(speechText) {
+    if (speechText.includes("```")) { const segs = speechText.split("```"); setVisualState('speaking', 'EDITH SYSTEM VECTOR', segs.trim()); const pre = document.createElement('pre'); pre.textContent = segs.replace(/^[a-zA-Z]+\n/, "").trim(); codeZone.appendChild(pre); } else { setVisualState('speaking', 'EDITH UTTERANCE', speechText); }
+    clearTimeout(pttTimeout); if (!farmInterval) { pttTimeout = setTimeout(() => { setVisualState('standby'); }, 5000); }
+    if (config.eleven && config.voice) {
+      try {
+        const res = await fetch(`https://elevenlabs.io{config.voice}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'xi-api-key': config.eleven }, body: JSON.stringify({ text: speechText, model_id: 'eleven_monolingual_v1', voice_settings: { stability: 0.7, similarity_boost: 0.8 } }) });
+        if (res.ok) { const ab = await res.blob(); const dUrl = URL.createObjectURL(ab); stopActiveAudioTracks(); currentAudio = new Audio(dUrl); currentAudio.onended = () => { URL.revokeObjectURL(dUrl); if (!farmInterval) setVisualState('standby'); }; await currentAudio.play(); return; }
+      } catch(e) {}
+    }
+    stopActiveAudioTracks(); const syn = new SpeechSynthesisUtterance(speechText); const vArr = window.speechSynthesis.getVoices(); const fv = vArr.find(v => v.name.includes("Zira") || v.name.includes("Hazel") || v.lang.includes("en-GB")); if (fv) syn.voice = fv; syn.rate = 1.05; syn.onend = () => { if (!farmInterval) setVisualState('standby'); }; window.speechSynthesis.speak(syn);
+  }
+
+  function stopFarming() { if (farmInterval) { clearInterval(farmInterval); farmInterval = null; } stopFarmBtn.disabled = true; statusBar.textContent = "Simulator pipeline sitting idle."; drawCanvas(); }
+  stopFarmBtn.addEventListener('click', stopFarming);
+
+  function drawCanvas() {
+    ctx.fillStyle = "#0c111c"; ctx.fillRect(0, 0, 340, 60); ctx.strokeStyle = "rgba(255,255,255,0.07)"; ctx.strokeRect(0, 0, 340, 60);
+    ctx.fillStyle = farmInterval ? "var(--accent)" : "rgba(255,255,255,0.2)"; ctx.beginPath(); ctx.arc(canvasX, canvasY, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,0.3)"; ctx.font = "9px monospace"; ctx.fillText(farmInterval ? "MACRO ACTIVE" : "RUNWAY UNUSED", 12, 50);
+  }
+
+  demoCanvas.addEventListener('click', (e) => { const r = demoCanvas.getBoundingClientRect(); canvasX = e.clientX - r.left; canvasY = e.clientY - r.top; statusBar.textContent = `Coordinates: [X:${Math.floor(canvasX)} Y:${Math.floor(canvasY)}]`; drawCanvas(); });
+  window.onload = () => { loadConfig(); if (window.speechSynthesis) window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>
