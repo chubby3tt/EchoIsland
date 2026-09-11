@@ -17,3 +17,4 @@ echoisland-core = { path = "../../crates/core" }
 echoisland-ipc = { path = "../../crates/ipc" }
 echoisland-paths = { path = "../../crates/paths" }
 echoisland-runtime = { path = "../../crates/runtime" }
+ 
