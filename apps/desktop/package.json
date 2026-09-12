@@ -2,11 +2,15 @@
   "name": "echoisland-desktop",
   "version": "0.1.0",
   "private": true,
-  "description": "EchoIsland Custom Desktop UI Window Module Layout",
+  "description": "EchoIsland Desktop UI Window Module Layout",
   "scripts": {
     "tauri": "tauri",
     "tauri:build": "tauri build"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@tauri-apps/api": "^1.6.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.6.0"
+  }
 }
