@@ -1,10 +1,11 @@
 {
   "build": {
     "distDir": "../web",
-    "devPath": "http://localhost:1420"
+    "devPath": "http://localhost:1420",
+    "beforeBuildCommand": ""
   },
   "package": {
-    "productName": "Iris 2.0",
+    "productName": "Iris",
     "version": "0.1.0"
   },
   "tauri": {
@@ -17,7 +18,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.chubby3tt.echoisland",
+      "identifier": "com.chubby.echoisland",
       "targets": "all"
     },
     "security": {
