@@ -1,4 +1,12 @@
 {
+  "build": {
+    "distDir": "../web",
+    "devPath": "http://localhost:1420"
+  },
+  "package": {
+    "productName": "Iris 2.0",
+    "version": "0.1.0"
+  },
   "tauri": {
     "bundle": {
       "active": true,
@@ -9,8 +17,24 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.chubby.echoisland",
+      "identifier": "com.chubby3tt.echoisland",
       "targets": "all"
-    }
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "alwaysOnTop": true,
+        "decorations": false,
+        "fullscreen": false,
+        "height": 50,
+        "resizable": false,
+        "skipTaskbar": true,
+        "title": "Iris 2.0",
+        "transparent": true,
+        "width": 380
+      }
+    ]
   }
 }
