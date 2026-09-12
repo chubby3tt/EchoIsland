@@ -2,7 +2,6 @@
   "name": "echoisland-monorepo",
   "private": true,
   "version": "0.1.0",
-  "description": "EchoIsland Monorepo Environment Workspace",
   "workspaces": [
     "apps/*",
     "crates/*"
@@ -11,10 +10,5 @@
     "dev": "npm run --prefix apps/desktop tauri dev",
     "build": "npm run --prefix apps/desktop tauri build",
     "desktop:build": "npm run --prefix apps/desktop tauri build"
-  },
-  "engines": {
-    "node": ">=20.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }
