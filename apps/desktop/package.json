@@ -2,7 +2,6 @@
   "name": "echoisland-desktop",
   "version": "0.1.0",
   "private": true,
-  "description": "EchoIsland Desktop UI Window Module Layout",
   "scripts": {
     "tauri": "tauri",
     "tauri:build": "tauri build"
