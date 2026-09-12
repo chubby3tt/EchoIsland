@@ -1,6 +1,8 @@
 {
   "name": "echoisland-monorepo",
   "private": true,
+  "version": "0.1.0",
+  "description": "EchoIsland Monorepo Environment Workspace",
   "workspaces": [
     "apps/*",
     "crates/*"
@@ -8,6 +10,12 @@
   "scripts": {
     "dev": "node ./scripts/run-tauri.mjs dev",
     "build": "node ./scripts/run-tauri.mjs build",
-    "desktop:build": "node ./scripts/run-tauri.mjs build"
-  }
+    "desktop:build": "node ./scripts/run-tauri.mjs build",
+    "clean": "node ./scripts/clean.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
 }
