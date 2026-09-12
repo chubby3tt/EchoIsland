@@ -25,7 +25,8 @@ jobs:
         run: npm install
 
       - name: Compile Standalone Iris Windows App
-        run: npm run desktop:build -- --no-tests
+        working-directory: apps/desktop
+        run: npm run tauri build -- --no-tests
 
       - name: Upload Finished Executable Asset
         uses: actions/upload-artifact@v4
