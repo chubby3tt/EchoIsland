@@ -1,12 +1,13 @@
 {
-  "name": "echoisland-windows",
+  "name": "echoisland-monorepo",
   "private": true,
   "workspaces": [
-    "apps/desktop"
+    "apps/*",
+    "crates/*"
   ],
   "scripts": {
-    "desktop:dev": "npm --workspace apps/desktop run tauri:dev",
-    "desktop:build": "npm --workspace apps/desktop run tauri:build",
-    "desktop:build:portable": "npm --workspace apps/desktop run tauri:portable"
+    "dev": "node ./scripts/run-tauri.mjs dev",
+    "build": "node ./scripts/run-tauri.mjs build",
+    "desktop:build": "node ./scripts/run-tauri.mjs build"
   }
 }
