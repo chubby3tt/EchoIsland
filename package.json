@@ -8,10 +8,9 @@
     "crates/*"
   ],
   "scripts": {
-    "dev": "node ./scripts/run-tauri.mjs dev",
-    "build": "node ./scripts/run-tauri.mjs build",
-    "desktop:build": "node ./scripts/run-tauri.mjs build",
-    "clean": "node ./scripts/clean.mjs"
+    "dev": "npm run --prefix apps/desktop tauri dev",
+    "build": "npm run --prefix apps/desktop tauri build",
+    "desktop:build": "npm run --prefix apps/desktop tauri build"
   },
   "engines": {
     "node": ">=20.0.0"
